@@ -1,23 +1,25 @@
+/**
+ * Joins a set of strings with a dash after stripping the strings of
+ * a leading sub string.
+ * @param {Set<String>} set - A collection of strings.
+ * @param {String} startString - The string to strip from the beginning
+ * of each item in the set.
+ * @author Bezaleel Olakunori <https://github.com/B3zaleel>
+ * @returns {String}
+ */
 export default function cleanSet(set, startString) {
-  // Check if the first argument is a set and the second is a string
-  if (!(set instanceof Set) || typeof startString !== 'string') {
-    throw new TypeError(
-      'First argument should be a Set and second argument should be a String',
-    );
-  }
-
-  // If startString is empty, return an empty string
-  if (startString === '') {
+  const parts = [];
+  if (!set || !startString || !(set instanceof Set) || typeof startString !== 'string') {
     return '';
   }
+  for (const value of set.values()) {
+    if (typeof value === 'string' && value.startsWith(startString)) {
+      const valueSubStr = value.substring(startString.length);
 
-  // Filter set values that start with startString and map them to remove startString
-  const filteredValues = [...set]
-    .filter(
-      (value) => typeof value === 'string' && value.startsWith(startString),
-    )
-    .map((value) => value.slice(startString.length));
-
-  // Join the filtered values with '-'
-  return filteredValues.join('-');
+      if (valueSubStr && valueSubStr !== value) {
+        parts.push(valueSubStr);
+      }
+    }
+  }
+  return parts.join('-');
 }
