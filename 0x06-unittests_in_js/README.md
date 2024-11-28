@@ -22,3 +22,4 @@ Requirements:
 You have to use assert
 You should be able to run the test suite using npm test 0-calcul.test.js
 Every test should pass without any warning
+Expected output
